@@ -8,9 +8,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 // RedisConfig.java
 @Configuration
 public class RedisConfig {
-//    @Bean
-//    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-//        // 自定义序列化配置
-//        return null;
-//    }
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(factory);
+        // Add custom serialization configuration here
+        return template;
+    }
 }
