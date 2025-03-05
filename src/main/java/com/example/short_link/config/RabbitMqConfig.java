@@ -1,6 +1,8 @@
 package com.example.short_link.config;
 
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,6 +24,11 @@ public class RabbitMqConfig {
     @Bean
     public Binding bindingGenerateQueue(DirectExchange shortLinkExchange, Queue shortLinkGenerateQueue) {
         return BindingBuilder.bind(shortLinkGenerateQueue).to(shortLinkExchange).with("generate.key");
+    }
+
+    @Bean
+    public MessageConverter jsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 
 

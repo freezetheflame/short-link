@@ -6,6 +6,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class ShortLinkService {
     @Autowired
@@ -17,7 +19,7 @@ public class ShortLinkService {
         String shortKey = ShortLinkGenerator.generateShortKey(originalUrl);
         // 异步发送消息到队列
         rabbitTemplate.convertAndSend("short_link.exchange", "generate.key",
-                new ShortLinkMessage(originalUrl, shortKey));
+                new ShortLinkMessage(originalUrl, shortKey,new Date()));
         return shortKey;
     }
 

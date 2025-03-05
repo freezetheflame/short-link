@@ -5,19 +5,18 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
 @Setter
 @Getter
+@Table(name = "short_links")
 public class ShortLinkEntity {
 
     @Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -25,4 +24,7 @@ public class ShortLinkEntity {
 
     @Column
     private String shortKey;
+
+    @Column
+    private Date createdAt;
 }

@@ -1,19 +1,20 @@
 package com.example.short_link.linkage.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.Date;
 
 @Data
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ShortLinkMessage {
     private String originalUrl;
     private String shortKey;
-    // 构造函数、Getter/Setter
+    private Date createdAt;
     public ShortLinkMessage(String originalUrl) {
         this.originalUrl = originalUrl;
+        this.createdAt = new Date();
     }
 }

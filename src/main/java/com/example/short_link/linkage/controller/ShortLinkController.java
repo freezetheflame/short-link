@@ -2,6 +2,8 @@ package com.example.short_link.linkage.controller;
 
 import com.example.short_link.linkage.dto.AccessLog;
 import com.example.short_link.linkage.service.ShortLinkService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,13 +22,17 @@ public class ShortLinkController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    private static final Logger logger = LogManager.getLogger(ShortLinkController.class);
+
+
     @GetMapping("/{shortKey}")
     public ResponseEntity<Void> redirect(@PathVariable String shortKey) {
         String originalUrl = shortLinkService.getOriginalUrl(shortKey);
-        // 发送访问日志到队列
-        rabbitTemplate.convertAndSend("log.exchange", "access.key",
-                new AccessLog(shortKey, new Date()));
-        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
+        logger.info("Redirect to: {}", originalUrl);
+//        // 发送访问日志到队列
+//        rabbitTemplate.convertAndSend("log.exchange", "access.key",
+//                new AccessLog(shortKey, new Date()));
+        return ResponseEntity.status(HttpStatus.MOVED_TEMPORARILY)
                 .header(HttpHeaders.LOCATION, originalUrl)
                 .build();
     }

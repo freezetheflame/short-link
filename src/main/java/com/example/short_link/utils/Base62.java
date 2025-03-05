@@ -6,6 +6,8 @@ public class Base62 {
 
     public static String encode(long value) {
         StringBuilder sb = new StringBuilder();
+//        System.out.println(value);
+//        System.out.println("wow");
         while (value > 0) {
             sb.append(BASE62_CHARS.charAt((int) (value % BASE)));
             value /= BASE;
