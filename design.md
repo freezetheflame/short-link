@@ -11,6 +11,7 @@
 
 
 数据库设计
+```sql
 用户表：
 CREATE TABLE users (
 id BIGSERIAL PRIMARY KEY,
@@ -22,3 +23,24 @@ status SMALLINT DEFAULT 1, -- 1: 启用, 0: 禁用
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
+
+![img.png](img.png)
+
+
+```sql
+CREATE TABLE short_links (
+    id SERIAL PRIMARY KEY,
+    short_key VARCHAR(10) UNIQUE NOT NULL,
+    original_url TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+```sql
+CREATE TABLE access_logs (
+                             id SERIAL PRIMARY KEY,
+                             short_key VARCHAR(10) NOT NULL,
+                             access_time TIMESTAMP NOT NULL
+);
+CREATE UNIQUE INDEX idx_short_key ON short_links(short_key);
+```

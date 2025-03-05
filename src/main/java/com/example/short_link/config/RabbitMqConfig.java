@@ -1,9 +1,6 @@
 package com.example.short_link.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +23,15 @@ public class RabbitMqConfig {
     public Binding bindingGenerateQueue(DirectExchange shortLinkExchange, Queue shortLinkGenerateQueue) {
         return BindingBuilder.bind(shortLinkGenerateQueue).to(shortLinkExchange).with("generate.key");
     }
+
+
+    // 在配置类中声明死信队列
+//    @Bean
+//    public Queue generateQueue() {
+//        return QueueBuilder.durable("short_link.generate.queue")
+//                .deadLetterExchange("dlq.exchange")
+//                .build();
+//    }
 }
 
 
