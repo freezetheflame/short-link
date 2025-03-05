@@ -29,7 +29,7 @@ public class UserService {
     }
 
 
-    public Boolean login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -38,6 +38,6 @@ public class UserService {
         }
 
         String token = JwtUtils.generateToken(user.getId(), user.getUsername());
-        return true;
+        return new LoginResponse(token, "User logged in successfully");
     }
 }
