@@ -1,19 +1,25 @@
 package com.example.short_link.linkage.service;
 
+import com.example.short_link.linkage.dao.ShortLinkEntity;
 import com.example.short_link.linkage.dto.ShortLinkMessage;
+import com.example.short_link.linkage.repo.ShortLinkRepository;
 import com.example.short_link.utils.ShortLinkGenerator;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class ShortLinkService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-
+    @Autowired
+    private ShortLinkRepository repo;
 
     public String generateShortLink(String originalUrl) {
         String shortKey = ShortLinkGenerator.generateShortKey(originalUrl);
@@ -24,7 +30,11 @@ public class ShortLinkService {
     }
 
     public String getOriginalUrl(String shortKey) {
-        // 查询数据库获取原始URL
-        return "https://www.baidu.com";
+        //根据shortKey查询原始URL
+        Optional<ShortLinkEntity> originalUrlEntity = repo.findByShortKey(shortKey);
+        if(originalUrlEntity.isPresent()) {
+            return originalUrlEntity.get().getOriginalUrl();
+        }else
+            return null;
     }
 }

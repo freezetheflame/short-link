@@ -28,6 +28,10 @@ public class ShortLinkController {
     @GetMapping("/{shortKey}")
     public ResponseEntity<Void> redirect(@PathVariable String shortKey) {
         String originalUrl = shortLinkService.getOriginalUrl(shortKey);
+        //如果找不到，返回404
+        if (originalUrl == null) {
+            return ResponseEntity.notFound().build();
+        }
         logger.info("Redirect to: {}", originalUrl);
 //        // 发送访问日志到队列
 //        rabbitTemplate.convertAndSend("log.exchange", "access.key",
