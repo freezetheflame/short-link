@@ -15,4 +15,6 @@ public interface ShortLinkRepository extends JpaRepository<ShortLinkEntity, Long
     void deleteByShortKey(String shortKey);
 
     boolean existsByShortKey(String shortKey);
+
+    Optional<ShortLinkEntity> findByOriginalUrl(String originalUrl);
 }
