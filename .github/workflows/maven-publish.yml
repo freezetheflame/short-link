@@ -15,6 +15,38 @@ jobs:
       contents: read
       packages: write
 
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_DB: shortlink
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 123456
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      rabbitmq:
+        image: rabbitmq:3.12-management
+        ports:
+          - 5672:5672
+          - 15672:15672
+        env:
+          RABBITMQ_DEFAULT_USER: guest
+          RABBITMQ_DEFAULT_PASS: guest
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 11
