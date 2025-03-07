@@ -31,7 +31,7 @@ public class ShortLinkService {
     @Autowired
     private ShortLinkRepository repo;
 
-    class res{
+    public class res{
         String shortKey;
         Boolean isExist;
 

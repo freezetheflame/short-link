@@ -10,11 +10,17 @@ import com.example.short_link.linkage.service.ShortLinkService;
 
 class ShortLinkGeneratorTest {
 
+    class res{
+        String shortUrl;
+        Boolean isCached;
+    }
+
+
     @Test
     void generateShortKeytest() {
         String s = "https://chat.qwen.ai/c/5c406d1e-fb04-4a85-9333-e5b1bf10845c";
         ShortLinkService shortLinkService = new ShortLinkService();
-        String shortKey = shortLinkService.generateShortKey(s);
+        ShortLinkService.res shortKey = shortLinkService.generateShortKey(s);
         int s2 =Hashing.murmur3_32_fixed().hashString(s, StandardCharsets.UTF_8).asInt();
         System.out.println(shortKey);
 //        System.out.println(s2);
